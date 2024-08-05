@@ -2,8 +2,8 @@ const http = require('http');
 const url = require('url');
 const routes = require('./routes');
 
-const hostname = '127.0.0.1';
-const port = 3456;
+const hostname = 'localhost';
+const port = 8080;
 
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url);
