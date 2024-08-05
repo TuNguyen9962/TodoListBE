@@ -1,4 +1,4 @@
-const todoController = require('../../controllers/todocontroller/todoController');
+const todoController = require('../../controllers/Todo/todoController');
 
 module.exports = {
   GET: todoController.getUsertask,
