@@ -2,4 +2,4 @@
 
 ## Activity Diagram
 
-<a href="RouterControllerDiagram.png"></a>
+<img src="RouterControllerDiagram.png" />
