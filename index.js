@@ -10,6 +10,7 @@ const server = http.createServer((req, res) => {
   const routeHandler = routes[parsedUrl.pathname];
   if (routeHandler) {
     if (routeHandler[req.method]) {
+      console.log("??")
       routeHandler[req.method](req, res);
     } else {
       res.writeHead(405, { 'Content-Type': 'text/plain' });
@@ -17,7 +18,7 @@ const server = http.createServer((req, res) => {
     }
   } else {
     res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end(' ');
+    res.end('404 Not Found');
   }
 });
 
