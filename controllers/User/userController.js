@@ -1,24 +1,28 @@
-exports.getUser = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('Get User');
-  res.end();
+const userHttpCode = require('../../http_status_code/users')
+
+
+
+exports.getUser = (request, response) => {
+  response.writeHead(userHttpCode.GET_USER_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
+  response.write(userHttpCode.GET_USER_SUCCESSFUL.message);
+  response.end();
 };
 
-exports.createUser = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('Create A User');
-  res.end();
+exports.createUser = (request, response) => {
+  response.writeHead(userHttpCode.USER_CREATED_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
+  response.write(userHttpCode.USER_CREATED_SUCCESSFUL.message);
+  response.end();
 };
 
 
-exports.updateUser = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain'});
-  res.write('Update User');
-  res.end();
+exports.updateUser = (request, response) => {
+  response.writeHead(userHttpCode.UPDATE_USER_SUCCESSFUL.status, { 'Content-Type': 'text/plain'});
+  response.write(userHttpCode.UPDATE_USER_SUCCESSFUL.message);
+  response.end();
 }
 
-exports.deleteUser = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain'});
-  res.write('Delete User');
-  res.end();
+exports.deleteUser = (request, response) => {
+  response.writeHead(userHttpCode.DELETE_TASK_SUCCESSFUL.status, { 'Content-Type': 'text/plain'});
+  response.write(userHttpCode.DELETE_TASK_SUCCESSFUL.message);
+  response.end();
 }

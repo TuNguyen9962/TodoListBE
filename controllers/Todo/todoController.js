@@ -1,23 +1,25 @@
-exports.getUsertask = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('getUserTodo');
-  res.end();
+const tasksHttpCode= require('../../http_status_code/tasks')
+
+exports.getUsertask = (request, response) => {
+  response.writeHead(tasksHttpCode.GET_TASK_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
+  response.write(tasksHttpCode.GET_TASK_SUCCESSFUL.message);
+  response.end();
 };
 
-exports.createUsertask = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('createUserTodo');
-  res.end();
+exports.createUsertask = (request, response) => {
+  response.writeHead(tasksHttpCode.TASK_CREATED_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
+  response.write(tasksHttpCode.TASK_CREATED_SUCCESSFUL.message);
+  response.end();
 };
 
-exports.updateUsertask = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('updateUsertask');
-  res.end();
+exports.updateUsertask = (request, response) => {
+  response.writeHead(tasksHttpCode.UPDATE_TASK_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
+  response.write(tasksHttpCode.UPDATE_TASK_SUCCESSFUL.message);
+  response.end();
 };
 
-exports.deleteUsertask = (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('deleteUsertask');
-  res.end();
+exports.deleteUsertask = (request, response) => {
+  response.writeHead(tasksHttpCode.DELETE_TASK_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
+  response.write(tasksHttpCode.DELETE_TASK_SUCCESSFUL.message);
+  response.end();
 };
