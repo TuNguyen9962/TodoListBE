@@ -1,4 +1,4 @@
-const userHttpCode = require('../../http_status_code/users')
+const userHttpCode = require('./users_http_code')
 
 
 

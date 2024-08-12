@@ -1,4 +1,4 @@
-const tasksHttpCode= require('../../http_status_code/tasks')
+const tasksHttpCode= require('./tasks_http_code')
 
 exports.getUsertask = (request, response) => {
   response.writeHead(tasksHttpCode.GET_TASK_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });

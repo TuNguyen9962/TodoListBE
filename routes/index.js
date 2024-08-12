@@ -1,5 +1,5 @@
-const todoRoute = require('./Tasks');
-const userRoute = require('./Users');
+const todoRoute = require('./tasksRoute');
+const userRoute = require('./usersRoute');
 
 module.exports = {
   '/api/tasks': todoRoute,
