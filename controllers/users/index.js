@@ -1,28 +1,24 @@
 const userHttpCode = require('./users_http_code')
-
+const writeResponse = require('../../helpers/utils')
 
 
 exports.getUser = (request, response) => {
-  response.writeHead(userHttpCode.GET_USER_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
-  response.write(userHttpCode.GET_USER_SUCCESSFUL.message);
+  writeResponse(userHttpCode.GET_USER_SUCCESSFUL.status, userHttpCode.GET_USER_SUCCESSFUL.message)
   response.end();
 };
 
 exports.createUser = (request, response) => {
-  response.writeHead(userHttpCode.USER_CREATED_SUCCESSFUL.status, { 'Content-Type': 'text/plain' });
-  response.write(userHttpCode.USER_CREATED_SUCCESSFUL.message);
+  writeResponse(userHttpCode.USER_CREATED_SUCCESSFUL.status, userHttpCode.USER_CREATED_SUCCESSFUL.message)
   response.end();
 };
 
 
 exports.updateUser = (request, response) => {
-  response.writeHead(userHttpCode.UPDATE_USER_SUCCESSFUL.status, { 'Content-Type': 'text/plain'});
-  response.write(userHttpCode.UPDATE_USER_SUCCESSFUL.message);
+  writeResponse(userHttpCode.UPDATE_USER_SUCCESSFUL.status, userHttpCode.UPDATE_USER_SUCCESSFUL.message)
   response.end();
 }
 
 exports.deleteUser = (request, response) => {
-  response.writeHead(userHttpCode.DELETE_TASK_SUCCESSFUL.status, { 'Content-Type': 'text/plain'});
-  response.write(userHttpCode.DELETE_TASK_SUCCESSFUL.message);
+  writeResponse(userHttpCode.DELETE_USER_SUCCESSFUL.status, userHttpCode.DELETE_USER_SUCCESSFUL.message)
   response.end();
 }

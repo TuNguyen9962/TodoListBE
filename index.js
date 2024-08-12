@@ -2,6 +2,7 @@ const http = require('http');
 const url = require('url');
 const routes = require('./routes');
 const httpStatusCode = require('./http_status_code/system');
+const writeResponse = require('./helpers/utils')
 
 const hostname = 'localhost';
 const port = 8080;
@@ -13,12 +14,10 @@ const server = http.createServer((request, response) => {
     if (routeHandler[request.method]) {
       routeHandler[request.method](request, response);
     } else {
-      response.writeHead(httpStatusCode.METHOD_NOT_ALLOWED.status, { 'Content-Type': 'text/plain' });
-      response.end(httpStatusCode.METHOD_NOT_ALLOWED.message);
+      writeResponse(httpStatusCode.METHOD_NOT_ALLOWED.status, httpStatusCode.METHOD_NOT_ALLOWED.message);
     }
   } else {
-    response.writeHead(httpStatusCode.NOT_FOUND.status, { 'Content-Type': 'text/plain' });
-    response.end(httpStatusCode.NOT_FOUND.message);
+    writeResponse(httpStatusCode.NOT_FOUND.status, httpStatusCode.NOT_FOUND.message);
   }
 });
 
