@@ -1,6 +1,11 @@
-function writeResponse (httpCode, message) {
+
+function writeResponse (httpCode, message , response, data) {
   response.writeHead(httpCode, { 'Content-Type': 'text/plain' });
-  response.write(message);
+  response.end(JSON.stringify({
+    data,
+    "message" : message,
+    "code" : httpCode  
+  }));
 }
 
-export { writeResponse }
+module.exports = { writeResponse }

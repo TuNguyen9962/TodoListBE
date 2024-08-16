@@ -8,18 +8,23 @@ const hostname = 'localhost';
 const port = 8080;
 
 const server = http.createServer((request, response) => {
-  const parsedUrl = url.parse(request.url);
+
+  const parsedUrl = url.parse(request.url, true);
   const routeHandler = routes[parsedUrl.pathname];
+
   if (routeHandler) {
-    if (routeHandler[request.method]) {
-      routeHandler[request.method](request, response);
+    const methodHandler = routeHandler[request.method];
+    if (methodHandler) {
+      methodHandler(request, response);
     } else {
-      writeResponse(httpStatusCode.METHOD_NOT_ALLOWED.status, httpStatusCode.METHOD_NOT_ALLOWED.message);
+      writeResponse.writeResponse(httpStatusCode.METHOD_NOT_ALLOWED.status, httpStatusCode.METHOD_NOT_ALLOWED.message,response,[]);
     }
   } else {
-    writeResponse(httpStatusCode.NOT_FOUND.status, httpStatusCode.NOT_FOUND.message);
+    writeResponse.writeResponse(httpStatusCode.NOT_FOUND.status, httpStatusCode.NOT_FOUND.message);
   }
 });
+
+  
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
