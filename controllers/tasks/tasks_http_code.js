@@ -21,6 +21,10 @@ const HTTP_STATUS_CODE = {
   USER_NOT_AUTHENTICATED: {
     message: 'User Not Authenticated',
     status: 401,
+  },
+  SYSTEM_ERROR: {
+    message: 'SERVER_ERROR',
+    status: 500,
   }
 };
 
