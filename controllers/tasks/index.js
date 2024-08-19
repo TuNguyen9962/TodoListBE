@@ -31,7 +31,6 @@ exports.getUsertask = (request, response) => {
 
 exports.createUsertask = (request, response) => {
   try {
-    debugger
     const data = helpers.readFileDataJson(tasksDataFilePath)
 
     var body = '';

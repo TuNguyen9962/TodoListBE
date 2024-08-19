@@ -18,10 +18,12 @@ const HTTP_STATUS_CODE = {
       message: 'Delete task successful',
       status: 204,
     },
+
     USER_AUTHENTICATED_FAILED: {
       message: 'User authentication failed',
       status: 401,
     },
+    
     USER_AUTHENTICATED_SUCCESS: {
       message: 'User authentication succeeded',
       status: 200,
