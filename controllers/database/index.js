@@ -1,22 +1,23 @@
 const http = require('http')
 const db_config = require('../../helpers/db_env')
 const db_http_code = require('./db_http_code')
+const helpers = require('../../helpers/utils')
 
-exports.getDb = (url) => {
-  return new Promise((resolve, reject) => {
+
+exports.getDb = async (request, response) => {
+  try {
     const options = {
-      hostname: db_config.url, // The server you are calling
-      port: db_config.port, // The port you are connecting
-      path: '/tasks', // API endpoint
+      hostname: 'localhost', // The server you are calling
+      port: 3000, // The port you are connecting
+      path: '/api/tasks', // API endpoint
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       }
     };
-  
-    const request = http.request(options, (response) => {
+    const dbRequest = http.request(options, (res) => {
       let data = '';
-
+    
       // Listen for data coming from the server
       res.on('data', (chunk) => {
         data += chunk;
@@ -24,18 +25,30 @@ exports.getDb = (url) => {
     
       // The response has been completely received
       res.on('end', () => {
-        console.log('Response status code:', res.statusCode);
-        console.log('Response headers:', res.headers);
-        console.log('Response body:', data);
+        // Set the response headers for Postman
+        response.setHeader('Content-Type', 'application/json');
+        response.setHeader('Access-Control-Allow-Origin', '*'); // Allow access from any origin
+
+        // Write the response body to the response stream
+        response.write(data);
+
+        // End the response
+        response.end();
       });
     });
-
-    request.on('error', (error) => {
-      reject(error);
+    
+    // Handle errors during the request
+    dbRequest.on('error', (error) => {
+      console.error('Request error:', error);
+      helpers.writeResponse(db_http_code.DB_SERVER_ERROR.status, db_http_code.DB_SERVER_ERROR.message, response, [])
+      response.end();
     });
 
-    request.end();
-  });
-};
+    dbRequest.end()
 
-//exports.writeDB = {}
+    } catch (error) {
+      console.error('Error:', error);
+      helpers.writeResponse(db_http_code.DB_SERVER_ERROR.status, db_http_code.DB_SERVER_ERROR.message, response, [])
+      response.end();
+    }
+}
