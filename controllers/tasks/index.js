@@ -4,6 +4,7 @@ const helpers = require('../../helpers/utils')
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
+const url = require('url');
 
 // Đường dẫn đến file JSON
 // const tasksDataFilePath = path.join(__dirname, '../../data/tasks.json');
@@ -97,7 +98,7 @@ exports.createUsertask = async (request, response) => {
 
   request.on('end', async () => {
     try {
-      
+
       const postData = JSON.stringify(JSON.parse(body));
       debugger
       const data = await makeHttpRequest(options, postData);
@@ -165,45 +166,48 @@ exports.updateUsertask = async (request, response) => {
 };
 
 exports.deleteUsertask = async (request, response) => {
+  debugger
+  const parsedUrl = url.parse(request.url, true);
+  const taskId = parsedUrl.query.taskId;
+
+  if (!taskId) {
+    helpers.writeResponse(
+      tasksHttpCode.SYSTEM_ERROR.status,
+      'Task ID is required.',
+      response,
+      []
+    );
+    return response.end();
+  }
+
   const options = {
     hostname: 'localhost',
     port: 3000,
-    path: '/api/tasks',
+    path: `/api/tasks?taskId=${taskId}`, // Chèn taskId vào query string
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
-  let body = '';
+  try {
+    const data = await makeHttpRequest(options);
+    const returnData = data.data;
 
-  request.on('data', chunk => {
-    body += chunk.toString();
-  });
-
-  request.on('end', async () => {
-    try {
-      
-      const postData = JSON.stringify(JSON.parse(body));
-      debugger
-      const data = await makeHttpRequest(options, postData);
-      const returnData = data.data
-
-      helpers.writeResponse(
-        tasksHttpCode.TASK_CREATED_SUCCESSFUL.status,
-        tasksHttpCode.TASK_CREATED_SUCCESSFUL.message,
-        response,
-        returnData
-      );
-    } catch (err) {
-      helpers.writeResponse(
-        tasksHttpCode.SYSTEM_ERROR.status,
-        tasksHttpCode.SYSTEM_ERROR.message,
-        response,
-        []
-      );
-    } finally {
-      response.end();
-    }
-    });
+    helpers.writeResponse(
+      tasksHttpCode.DELETE_TASK_SUCCESSFUL.status,
+      tasksHttpCode.DELETE_TASK_SUCCESSFUL.message,
+      response,
+      returnData
+    );
+  } catch (err) {
+    helpers.writeResponse(
+      tasksHttpCode.SYSTEM_ERROR.status,
+      tasksHttpCode.SYSTEM_ERROR.message,
+      response,
+      []
+    );
+  } finally {
+    response.end();
+  }
 };
