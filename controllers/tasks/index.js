@@ -1,13 +1,15 @@
 
 const tasksHttpCode = require('./tasks_http_code')
 const helpers = require('../../helpers/utils')
-const path = require('path');
-const fs = require('fs');
 const http = require('http');
 const url = require('url');
 
-// Đường dẫn đến file JSON
-// const tasksDataFilePath = path.join(__dirname, '../../data/tasks.json');
+const options = {
+  hostname: 'localhost',
+  port: 3000,
+  path: '/api/tasks',
+  method: 'GET',
+};
 
 // Hàm helper để gửi yêu cầu HTTP
 function makeHttpRequest(options, postData = null) {
@@ -61,8 +63,8 @@ exports.getUsertask = async (request, response) => {
     const data = await makeHttpRequest(options);
     const returnData = data.data
     helpers.writeResponse(
-      tasksHttpCode.GET_TASK_SUCCESSFUL.status,
-      tasksHttpCode.GET_TASK_SUCCESSFUL.message,
+      data.code,
+      data.message,
       response,
       returnData
     )
@@ -195,8 +197,8 @@ exports.deleteUsertask = async (request, response) => {
     const returnData = data.data;
 
     helpers.writeResponse(
-      tasksHttpCode.DELETE_TASK_SUCCESSFUL.status,
-      tasksHttpCode.DELETE_TASK_SUCCESSFUL.message,
+      data.code,
+      data.message,
       response,
       returnData
     );

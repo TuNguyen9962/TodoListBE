@@ -1,8 +1,11 @@
 const controller = require('../controllers');
+const run = require('./run');
+const Middleware = require('../middlewares/check_token');
 
 module.exports = {
-  GET: controller.users.getUser,
-  POST: controller.users.createUser,
-  PUT: controller.users.updateUser,
-  DELETE: controller.users.deleteUser,
+  GET:    run([Middleware.checkToken],controller.users.getUser),
+  POST:   run([],controller.users.createUser),
+  PUT:    run([Middleware.checkToken],controller.users.updateUser),
+  DELETE: run([Middleware.checkToken],controller.users.deleteUser),
 };
+
