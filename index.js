@@ -8,7 +8,6 @@ const hostname = 'localhost';
 const port = 8080;
 
 const server = http.createServer((request, response) => {
-
   const parsedUrl = url.parse(request.url, true);
   const routeHandler = routes[parsedUrl.pathname];
 
@@ -23,8 +22,6 @@ const server = http.createServer((request, response) => {
     writeResponse.writeResponse(httpStatusCode.NOT_FOUND.status, httpStatusCode.NOT_FOUND.message);
   }
 });
-
-  
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

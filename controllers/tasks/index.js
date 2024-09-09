@@ -14,7 +14,6 @@ const options = {
 // Hàm helper để gửi yêu cầu HTTP
 function makeHttpRequest(options, postData = null) {
   return new Promise((resolve, reject) => {
-    // debugger
     const req = http.request(options, (res) => {
       let data = '';
 
@@ -102,7 +101,6 @@ exports.createUsertask = async (request, response) => {
     try {
 
       const postData = JSON.stringify(JSON.parse(body));
-      debugger
       const data = await makeHttpRequest(options, postData);
       const returnData = data.data
 
@@ -168,7 +166,6 @@ exports.updateUsertask = async (request, response) => {
 };
 
 exports.deleteUsertask = async (request, response) => {
-  debugger
   const parsedUrl = url.parse(request.url, true);
   const taskId = parsedUrl.query.taskId;
 

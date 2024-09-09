@@ -6,7 +6,6 @@ const url = require('url');
 // Hàm helper để gửi yêu cầu HTTP
 function makeHttpRequest(options, postData = null) {
   return new Promise((resolve, reject) => {
-    // debugger
     const req = http.request(options, (res) => {
       let data = '';
 
@@ -44,7 +43,6 @@ function makeHttpRequest(options, postData = null) {
 }
 
 exports.getUser = async (request, response) => {
-  // debugger
   const options = {
     hostname: 'localhost',
     port: 3000,
@@ -74,7 +72,6 @@ exports.getUser = async (request, response) => {
 };
 
 exports.createUser = async (request, response) => {
-  // debugger
   const options = {
     hostname: 'localhost',
     port: 3000,
@@ -95,7 +92,6 @@ exports.createUser = async (request, response) => {
     try {
 
       const postData = JSON.stringify(JSON.parse(body));
-      debugger
       const data = await makeHttpRequest(options, postData);
       const returnData = data.data
 
@@ -119,7 +115,6 @@ exports.createUser = async (request, response) => {
 };
 
 exports.updateUser = async (request, response) => {
-  debugger
   const options = {
     hostname: 'localhost',
     port: 3000,
@@ -162,7 +157,6 @@ exports.updateUser = async (request, response) => {
 };
 
 exports.deleteUser = async (request, response) => {
-  debugger
   const parsedUrl = url.parse(request.url, true);
   const userId = parsedUrl.query.userId;
 
