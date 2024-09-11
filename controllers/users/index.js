@@ -2,6 +2,8 @@ const userHttpCode = require('./users_http_code')
 const helpers = require('../../helpers/utils')
 const http = require('http');
 const url = require('url');
+const jwt = require('jsonwebtoken');
+const { checkToken, getUserToken } = require('../../middlewares/check_token');
 
 // Hàm helper để gửi yêu cầu HTTP
 function makeHttpRequest(options, postData = null) {
@@ -42,6 +44,7 @@ function makeHttpRequest(options, postData = null) {
   });
 }
 
+// GET User
 exports.getUser = async (request, response) => {
   const options = {
     hostname: 'localhost',
@@ -71,6 +74,7 @@ exports.getUser = async (request, response) => {
   }
 };
 
+// POST Create User
 exports.createUser = async (request, response) => {
   const options = {
     hostname: 'localhost',
@@ -114,6 +118,7 @@ exports.createUser = async (request, response) => {
   });
 };
 
+//  UPDATE User
 exports.updateUser = async (request, response) => {
   const options = {
     hostname: 'localhost',
@@ -156,6 +161,7 @@ exports.updateUser = async (request, response) => {
   });
 };
 
+// DELETE User
 exports.deleteUser = async (request, response) => {
   const parsedUrl = url.parse(request.url, true);
   const userId = parsedUrl.query.userId;
@@ -163,7 +169,7 @@ exports.deleteUser = async (request, response) => {
   if (!userId) {
     helpers.writeResponse(
       userHttpCode.SYSTEM_ERROR.status,
-      'Task ID is required.',
+      'User ID is required.',
       response,
       []
     );
@@ -202,19 +208,35 @@ exports.deleteUser = async (request, response) => {
   }
 };
 
-exports.login = (request, response) => {
-  var body = '';
-  request.on('data', chunk => {
-    body += chunk.toString();
+// In your user controller or routes file
+
+const { getUserToken, checkToken } = require('./path/to/auth');
+
+// To generate token during login
+exports.login = (req, res) => {
+  const { username, password } = JSON.parse(req.body);
+
+  if (username === 'user' && password === 'password') {
+    const token = getUserToken(username);
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      code: 'SUCCESS',
+      message: 'User authenticated successfully',
+      token: token.token,
+    }));
+  } else {
+    res.writeHead(401, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({
+      code: 'UNAUTHORIZED',
+      message: 'Invalid username or password',
+    }));
+  }
+};
+
+// To protect routes
+exports.getUser = (req, res) => {
+  checkToken(req, res, () => {
+    // Your route logic after token is validated
   });
-  request.on('end', () => {
-    const parsedBody = JSON.parse(body);
-    if (parsedBody.username === 'user' && parsedBody.password === 'password') {
-      const token = middleWare.getUserToken();
-      writeResponse.writeResponse(userHttpCode.USER_AUTHENTICATED_SUCCESS.status, userHttpCode.USER_AUTHENTICATED_SUCCESS.message, response, token)
-      
-    } else {
-      writeResponse.writeResponse(userHttpCode.USER_AUTHENTICATED_FAILED.status, userHttpCode.USER_AUTHENTICATED_FAILED.message,response)
-    }
-  });
-}
+};
+
