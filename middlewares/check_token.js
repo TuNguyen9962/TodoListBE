@@ -41,4 +41,4 @@ const checkToken = (req, res, next) => {
   });
 };
 
-module.exports = { SECRET_KEY, getUserToken, checkToken };
+module.exports = { getUserToken, checkToken };

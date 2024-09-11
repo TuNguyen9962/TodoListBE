@@ -208,9 +208,6 @@ exports.deleteUser = async (request, response) => {
   }
 };
 
-// In your user controller or routes file
-
-const { getUserToken, checkToken } = require('./path/to/auth');
 
 // To generate token during login
 exports.login = (req, res) => {
